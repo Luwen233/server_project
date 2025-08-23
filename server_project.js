@@ -68,7 +68,7 @@ app.post('/register', async (req, res) => {
 app.get('/expense/:id', (req, res) => {
     const id = req.params.id;
     if (id > 0) {
-        con.query(`SELECT * FROM expense WHERE user_id =${id}`, (err, result) => {
+        con.query(`SELECT * FROM expense WHERE users_id =${id}`, (err, result) => {
             if (err) return res.status(500).json({ error: err });
             res.status(200).json(result);
         })
@@ -83,8 +83,15 @@ app.get('/expense/:id', (req, res) => {
 
 
 // Search expenses by keyword
-app.get('/search/:keyword', (req, res) => {
-    
+app.get('/expense/search/:keyword', (req, res) => {
+     const keyword = req.params.keyword;
+    if (!keyword) return res.status(400).send("Keyword is required");
+
+    const sql = "SELECT * FROM expense WHERE item LIKE ?";
+    con.query(sql, [`%${keyword}%`], (err, result) => {
+        if (err) return res.status(500).json({ error: err });
+        res.status(200).json(result);
+    });
 });
 
 
