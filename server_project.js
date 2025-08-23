@@ -84,7 +84,15 @@ app.get('/expense/:id', (req, res) => {
 
 // Search expenses by keyword
 app.get('/search/:keyword', (req, res) => {
-    
+    const keyword = req.query.keyword;
+    if (!keyword) return res.status(400).send("Keyword is required");
+
+    const sql = "SELECT * FROM expense WHERE item LIKE ? ORDER BY date DESC";
+    con.query(sql, [`%${keyword}%`], (err, result) => {
+        if (err) return res.status(500).json({ error: err });
+        res.status(200).json(result);
+    });
+
 });
 
 
