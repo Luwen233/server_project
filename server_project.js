@@ -96,8 +96,6 @@ app.post('/add', (req, res) => {
 });
     
 
-
-
 // Delete an expense by id
 app.delete('/delete/:id', (req, res) => {
     
