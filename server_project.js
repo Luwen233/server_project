@@ -92,6 +92,7 @@ app.get('/expense/search/:keyword', (req, res) => {
         if (err) return res.status(500).json({ error: err });
         res.status(200).json(result);
     });
+
 });
 
 
