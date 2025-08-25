@@ -83,7 +83,7 @@ app.get('/expense/:id', (req, res) => {
 
 
 // Search expenses by keyword
-app.get('/expense/search/:keyword', (req, res) => {
+app.get('/search/:keyword', (req, res) => {
      const keyword = req.params.keyword;
     if (!keyword) return res.status(400).send("Keyword is required");
 
