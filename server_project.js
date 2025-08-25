@@ -98,9 +98,11 @@ app.get('/search/:keyword', (req, res) => {
 
 // Add expense
 app.post('/add', (req, res) => {
-    
+    const { id, item, paid } = req.body;
+    con.query('INSERT INTO expense (user_id, item, paid) VALUES (?, ?, ?)', [id, item, paid],
+        (err) => err ? res.status(500).json({ error: err }) : res.status(200).send('Inserted!'));
 });
-
+    
 
 // Delete an expense by id
 app.delete('/delete/:id', (req, res) => {
