@@ -96,7 +96,15 @@ app.post('/add', (req, res) => {
 
 // Delete an expense by id
 app.delete('/delete/:id', (req, res) => {
-    
+    const id = req.params.id;
+    con.query('SELECT * FROM expense WHERE id = ?', [id], (err, result) => {
+        if (err) return res.status(500).json({ error: err });
+        if (result.length === 0) return res.status(404).json('expense not found');
+        con.query('DELETE FROM expense WHERE id = ?', [id], (deleteErr) => {
+            if (deleteErr) return res.status(500).json({ error: deleteErr });
+            res.status(200).json('Deleted!')
+        });
+    });
 });
 
 
